@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Navigate,
+} from 'react-router-dom';
+import Login from './containers/login';
+import Home from './containers/home';
+import Error from './components/error';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+const PrivateRoute = ({ children }) => {
+  const employeeId = JSON.parse(window.sessionStorage.getItem('employeeId'));
+  return employeeId ? children : <Navigate to="/" />;
+};
+
+export default () => (
+  <BrowserRouter>
+    <div className="h-100 w-100">
+      <Routes>
+        <Route index path="/" element={<Login />} />
+        <Route path="home" element={
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        } />
+        <Route path="*" element={<Error />} />
+      </Routes>
     </div>
-  );
-}
+  </BrowserRouter>
+);
 
-export default App;

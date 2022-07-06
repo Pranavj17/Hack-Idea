@@ -1,5 +1,10 @@
+html {
+  height: 100%;
+}
 body {
   margin: 0;
+  height: 100%;
+  width: 100%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -10,4 +15,27 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#root {
+  height: 100%;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.h-5 {
+  height: 5%;
+}
+.h-10 {
+  height: 10%;
+}
+.h-15 {
+  height: 15%;
+}
+.h-80 {
+  height: 80%;
+}
+
+.h-85 {
+  height: 85%;
 }
