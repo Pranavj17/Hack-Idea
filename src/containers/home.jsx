@@ -54,6 +54,26 @@ const Home = () => {
   const onClose = () => {
     setIsOpen(false);
   };
+
+  const sortChallenges = (key) => {
+    let obj = {};
+    if (key === 'default') {
+      obj = JSON.parse(window.sessionStorage.getItem('challenges'));
+      setChallenges(obj);
+    } else {
+      const [order, type] = key.split('-');
+      const list = Object.values(challenges || {}).sort((a, b) => {
+        if (order === 'asc') {
+          return a[type] - b[type];
+        }
+        return b[type] - a[type];
+      });
+      list.forEach((a) => {
+        obj[a.id] = a
+      });
+      setChallenges(obj);
+    }
+  };
   return (
     <>
       <HomeComponent
@@ -61,6 +81,7 @@ const Home = () => {
         challenges={challenges}
         updateChallenges={updateChallenges}
         isOpen={isOpen}
+        sortChallenges={sortChallenges}
       />
       {isOpen && (
         <Modal
@@ -69,16 +90,16 @@ const Home = () => {
           onSave={onSave}
         >
           <div className="w-100">
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="floatingInput" placeholder="title" />
+            <div className="form-floating mb-3">
+              <input type="text" className="form-control" id="floatingInput" placeholder="title" />
               <label for="floatingInput">Title</label>
             </div>
-            <div class="form-floating mb-3">
-              <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+            <div className="form-floating mb-3">
+              <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
               <label for="floatingTextarea">Comments</label>
             </div>
-            <div class="form-floating mb-3">
-              <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+            <div className="form-floating mb-3">
+              <select className="form-select" id="floatingSelect" aria-label="Floating label select example">
                 {Tags.map(({ key, value}) => {
                   return (
                     <option id={key} value={key}>{value}</option>

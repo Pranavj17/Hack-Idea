@@ -13,11 +13,11 @@ const LoginComponent = ({
           {label.HACK_IDEAS}
         </div>
         <div className="card-body">
-        <div class="mb-3">
-          <label for="employeeId" class="form-label">{label.EMPLOYEE_ID}</label>
+        <div className="mb-3">
+          <label className="form-label">{label.EMPLOYEE_ID}</label>
           <input
             type="number"
-            class="form-control"
+            className="form-control"
             id="employeeId"
             aria-describedby="emailHelp"
             onChange={() => updateError('')}

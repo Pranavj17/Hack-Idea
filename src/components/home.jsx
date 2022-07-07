@@ -7,16 +7,26 @@ const tableHead = [
   { key: 'description', value: 'Description' },
   { key: 'upVote', value: 'Votes' },
   { key: 'createdDate', value: 'Created At' },
-]
+];
+
+const sort = [
+  { key: 'default', value: 'Default'},
+  { key: 'asc-votes', value: 'Votes: low to high' },
+  { key: 'desc-votes', value: 'Votes: high to low' },
+  { key: 'asc-id', value: 'Date: last' },
+  { key: 'desc-id', value: 'Date: recent' },
+];
+
 const HomeComponent = ({
   handleNewEntry,
   challenges,
   updateChallenges,
   isOpen,
+  sortChallenges,
 }) => {
   return (
     <div className="w-100 h-100">
-      <div className="h-5 text-white align-items-center justify-content-center d-flex bg-primary">
+      <div className="h-5 fs-2 text-white align-items-center justify-content-center d-flex bg-primary">
         {label.HACK_IDEAS}
       </div>
       <div className="h-10 row mx-0 align-content-center justify-content-end p-2">
@@ -29,10 +39,33 @@ const HomeComponent = ({
           {label.ADD_IDEAS_CHALLENGES}
         </button>
       </div>
-      <div className="h-85 w-100">
+      <div className="h-10 d-flex px-2 align-content-center justify-content-end">
+        <div className="form-floating w-25">
+          <select
+            className="form-select"
+            id="sortSelect"
+            aria-label="Floating label select example"
+            disabled={Object.keys(challenges).length === 0}
+            onChange={(e) => sortChallenges(e.target.value)}
+          >
+            {sort.map(({ key, value}) => {
+              return (
+                <option
+                  id={key}
+                  value={key}
+                >
+                  {value}
+                </option>
+              );
+            })}
+          </select>
+          <label for="sortSelect">Sort</label>
+        </div>
+      </div>
+      <div className="h-75 w-100 overflowY">
         {Object.values(challenges)?.length > 0 ? (
-          <div className="border rounded m-2 p-2">
-            <table className="table text-center">
+          <div className="border rounded mx-2 p-2">
+            <table className="table text-center table-responsive table-striped">
               <thead>
                 <tr>
                   {tableHead?.map(({ key, value }) => {

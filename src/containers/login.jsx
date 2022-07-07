@@ -10,7 +10,6 @@ const Login = () => {
     navigate("home", { replace: true });
   };
 
-  console.log('error', error);
   return (
     <LoginComponent
       onSubmit={onSubmit}
