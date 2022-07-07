@@ -18,9 +18,10 @@ const LoginComponent = ({
           <input
             type="number"
             className="form-control"
+            data-testid="employeeId"
             id="employeeId"
             aria-describedby="emailHelp"
-            onChange={() => updateError('')}
+            onFocus={() => updateError('')}
           />
         </div>
         {error && <div className="w-100 text-danger mb-1">{error}</div>}

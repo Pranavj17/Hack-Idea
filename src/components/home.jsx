@@ -52,6 +52,7 @@ const HomeComponent = ({
               return (
                 <option
                   id={key}
+                  key={key}
                   value={key}
                 >
                   {value}
@@ -59,7 +60,7 @@ const HomeComponent = ({
               );
             })}
           </select>
-          <label for="sortSelect">Sort</label>
+          <label htmlFor="sortSelect">Sort</label>
         </div>
       </div>
       <div className="h-75 w-100 overflowY">
