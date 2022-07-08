@@ -1,16 +1,6 @@
 import React from "react";
 import label from "../label";
 
-const tableHead = [
-  { key: '#', value: '#' },
-  { key: 'title', value: 'Title' },
-  { key: 'description', value: 'Description' },
-  { key: 'tag', value: 'Tag' },
-  { key: 'createdDate', value: 'Created At' },
-  { key: 'upVote', value: 'Votes' },
-  { key: 'actions', value: 'Actions' },
-];
-
 const sort = [
   { key: 'default', value: 'Default'},
   { key: 'asc-votes', value: 'Votes: low to high' },
@@ -95,7 +85,7 @@ const HomeComponent = ({
                   <div className="w-40">{description}</div>
                   <div className="w-10">{FormatedDate}</div>
                   <div className="w-10">{tag}</div>
-                  <div role="presentation" onClick={() => updateVotes(id)} className="w-10 cursor-pointer">{votes}<i className="px-1 fas fa-arrow-circle-up text-success" /></div>
+                  <div role="presentation" onClick={() => updateVotes(id)} className="w-10 cursor-pointer">{votes}<i className="px-1 arrow fas fa-arrow-circle-up text-success" /></div>
                   <div className="w-15 px-2">
                     <button onClick={() => editChallenges(id)} type="button" className="btn w-100 btn-secondary">
                       {label.EDIT}
@@ -109,51 +99,6 @@ const HomeComponent = ({
                 </div>
               );
             })}
-            {/* <table className="table table-bordered m-0 text-center table-responsive table-striped">
-              <thead>
-                <tr>
-                  {tableHead?.map(({ key, value }) => {
-                    return (
-                      <th key={key} id={key} scope="col">{value}</th>
-                    );
-                  })}
-                </tr>
-              </thead>
-              <tbody className="table-group-divider text-break">
-                {Object.values(challenges).map(({
-                  title,
-                  description,
-                  votes,
-                  tag,
-                  id,
-                  FormatedDate
-                }, index) => {
-                  return (
-                    <tr key={id}>
-                      <th scope="row">{index + 1}</th>
-                      <td>{title}</td>
-                      <td>{description}</td>
-                      <td>{tag}</td>
-                      <td>{FormatedDate}</td>
-                      <td
-                        role="presentation"
-                        className="cursor-pointer"
-                        onClick={() => updateVotes(id)}
-                      >
-                        {votes}
-                        <i className="px-1 fas fa-arrow-circle-up text-success" />
-                      </td>
-                      <td
-                        className="d-flex justify-content-between"
-                      >
-                        <i role="presentation" onClick={() => editChallenges(id)} className="cursor-pointer fas fa-edit" />
-                        <i role="presentation" onClick={() => deleteChallenges(id)} className="cursor-pointer fas fa-trash" />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table> */}
           </div>
         ) : <div className="fs-1 row mx-0 h-100 align-items-center justify-content-center text-danger fw-bold text-center">{label.NO_RECORDS_FOUND}</div>}
       </div>

@@ -44,4 +44,10 @@ const LoginComponent = ({
   )
 };
 
+// LoginComponent.propTypes = {
+//   onSubmit: propTypes.func.isRequired,
+//   error: propTypes.func.isRequired,
+//   updateError: propTypes.func.isRequired
+// };
+
 export default LoginComponent;
