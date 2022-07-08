@@ -141,6 +141,7 @@ const Home = () => {
         filterChallenges={filterChallenges}
         editChallenges={editChallenges}
         deleteChallenges={deleteChallenges}
+        isOpen={isOpen}
       />
       {isOpen && (
         <Modal

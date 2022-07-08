@@ -27,6 +27,7 @@ const HomeComponent = ({
   filterChallenges,
   editChallenges,
   deleteChallenges,
+  isOpen
 }) => {
   return (
     <div className="w-100 h-100">
@@ -37,6 +38,7 @@ const HomeComponent = ({
         <button
           type="button"
           className="btn btn-primary w-25 p-2"
+          disabled={isOpen}
           onClick={() => handleNewEntry()}
         >
           {label.ADD_IDEAS_CHALLENGES}
