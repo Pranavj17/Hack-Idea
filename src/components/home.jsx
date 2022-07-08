@@ -5,8 +5,10 @@ const tableHead = [
   { key: '#', value: '#' },
   { key: 'title', value: 'Title' },
   { key: 'description', value: 'Description' },
-  { key: 'upVote', value: 'Votes' },
+  { key: 'tag', value: 'Tag' },
   { key: 'createdDate', value: 'Created At' },
+  { key: 'upVote', value: 'Votes' },
+  { key: 'actions', value: 'Actions' },
 ];
 
 const sort = [
@@ -20,32 +22,43 @@ const sort = [
 const HomeComponent = ({
   handleNewEntry,
   challenges,
-  updateChallenges,
-  isOpen,
+  updateVotes,
   sortChallenges,
+  filterChallenges,
+  editChallenges,
+  deleteChallenges,
 }) => {
   return (
     <div className="w-100 h-100">
-      <div className="h-5 fs-2 text-white align-items-center justify-content-center d-flex bg-primary">
+      <div className="h-5 fs-2 fw-bold text-white align-items-center justify-content-center d-flex bg-primary">
         {label.HACK_IDEAS}
       </div>
       <div className="h-10 row mx-0 align-content-center justify-content-end p-2">
         <button
           type="button"
-          className="btn btn-primary w-25"
-          disabled={isOpen}
+          className="btn btn-primary w-25 p-2"
           onClick={() => handleNewEntry()}
         >
           {label.ADD_IDEAS_CHALLENGES}
         </button>
       </div>
-      <div className="h-10 d-flex px-2 align-content-center justify-content-end">
+      <div className="h-10 d-flex flex-wrap px-2 justify-content-between">
+        <div className="w-25 form-floating">
+          <input
+            type="search"
+            name="search"
+            id="search"
+            className="form-control"
+            onChange={(e) => filterChallenges(e.target.value)}
+          />
+          <label htmlFor="search">{label.SEARCH}</label>
+        </div>
         <div className="form-floating w-25">
           <select
             className="form-select"
             id="sortSelect"
+            disabled={Object.values(challenges).length === 0}
             aria-label="Floating label select example"
-            disabled={Object.keys(challenges).length === 0}
             onChange={(e) => sortChallenges(e.target.value)}
           >
             {sort.map(({ key, value}) => {
@@ -63,15 +76,43 @@ const HomeComponent = ({
           <label htmlFor="sortSelect">Sort</label>
         </div>
       </div>
-      <div className="h-75 w-100 overflowY">
+      <div className="h-75 col-12 col-md-10 mx-auto overflowY">
         {Object.values(challenges)?.length > 0 ? (
-          <div className="border rounded mx-2 p-2">
-            <table className="table text-center table-responsive table-striped">
+          <div className="p-2">
+            {Object.values(challenges || {}).map(({
+              title,
+              description,
+              votes,
+              tag,
+              id,
+              FormatedDate
+            }) => {
+              return (
+                <div className="card w-100 align-items-center p-2 mb-2 flex-row flex-wrap shadow-sm">
+                  <div className="fs-2 w-100">{title}</div>
+                  <div className="w-40">{description}</div>
+                  <div className="w-10">{FormatedDate}</div>
+                  <div className="w-10">{tag}</div>
+                  <div role="presentation" onClick={() => updateVotes(id)} className="w-10 cursor-pointer">{votes}<i className="px-1 fas fa-arrow-circle-up text-success" /></div>
+                  <div className="w-15 px-2">
+                    <button onClick={() => editChallenges(id)} type="button" className="btn w-100 btn-secondary">
+                      {label.EDIT}
+                    </button>
+                  </div>
+                  <div className="w-15 px-2">
+                    <button onClick={() => deleteChallenges(id)} type="button" className="btn w-100 btn-danger">
+                      {label.DELETE}
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+            {/* <table className="table table-bordered m-0 text-center table-responsive table-striped">
               <thead>
                 <tr>
                   {tableHead?.map(({ key, value }) => {
                     return (
-                      <th key={key} id={key} scope="col-3">{value}</th>
+                      <th key={key} id={key} scope="col">{value}</th>
                     );
                   })}
                 </tr>
@@ -81,6 +122,7 @@ const HomeComponent = ({
                   title,
                   description,
                   votes,
+                  tag,
                   id,
                   FormatedDate
                 }, index) => {
@@ -89,19 +131,27 @@ const HomeComponent = ({
                       <th scope="row">{index + 1}</th>
                       <td>{title}</td>
                       <td>{description}</td>
+                      <td>{tag}</td>
+                      <td>{FormatedDate}</td>
                       <td
                         role="presentation"
                         className="cursor-pointer"
-                        onClick={() => updateChallenges(id)}
+                        onClick={() => updateVotes(id)}
                       >
-                        {votes}<i className="fas fa-arrow-up" />
+                        {votes}
+                        <i className="px-1 fas fa-arrow-circle-up text-success" />
                       </td>
-                      <td>{FormatedDate}</td>
+                      <td
+                        className="d-flex justify-content-between"
+                      >
+                        <i role="presentation" onClick={() => editChallenges(id)} className="cursor-pointer fas fa-edit" />
+                        <i role="presentation" onClick={() => deleteChallenges(id)} className="cursor-pointer fas fa-trash" />
+                      </td>
                     </tr>
                   );
                 })}
               </tbody>
-            </table>
+            </table> */}
           </div>
         ) : <div className="fs-1 row mx-0 h-100 align-items-center justify-content-center text-danger fw-bold text-center">{label.NO_RECORDS_FOUND}</div>}
       </div>

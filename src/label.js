@@ -6,5 +6,9 @@ export default {
   ADD_IDEAS_CHALLENGES: "Add Ideas/Challenges",
   CLOSE: "CLOSE",
   SAVE: "SAVE",
+  UPDATE: "UPDATE",
+  EDIT: 'Edit',
+  DELETE: 'Delete',
   NO_RECORDS_FOUND: 'NO RECORDS FOUNDS',
+  SEARCH: 'Search',
 };

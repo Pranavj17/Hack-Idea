@@ -42,3 +42,27 @@ code {
 .h-85 {
   height: 85%;
 }
+
+.h-90 {
+  height: 90%;
+}
+
+.w-10 {
+  width: 10%;
+}
+
+.w-15 {
+  width: 15%;
+}
+.w-20 {
+  width: 20%;
+}
+
+.w-40 {
+  width: 40%;
+}
+
+.overflowY {
+  overflow-y: auto
+  ;
+}
