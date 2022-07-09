@@ -27,6 +27,7 @@ const generateString = (length = 5) => {
 const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [editId, setEditId] = useState('');
+  const [error, setError] = useState('');
   const [challenges, setChallenges] = useState(() => {
     const challenges = JSON.parse(window.sessionStorage.getItem('challenges'));
     return challenges || {};
@@ -63,21 +64,26 @@ const Home = () => {
     const description = document.getElementById('form-description').value;
     const tag =  document.getElementById('form-tags').value;
     const votes = 0;
-    setIsOpen(false);
-    const dataToSend = {
-      id,
-      title,
-      description,
-      tag,
-      createdDate,
-      updatedDate: createdDate,
-      FormatedDate: date.toISOString().slice(0, 10),
-      votes
-    };
-    const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges'));
-    storedChallenges[id] = challenges[id] = { ...dataToSend };
-    setChallenges({ ...challenges });
-    window.sessionStorage.setItem('challenges', JSON.stringify({ ...storedChallenges }))
+    if (!title) {
+      setError('Title is required');
+    } else {
+      setIsOpen(false);
+      const dataToSend = {
+        id,
+        title,
+        description,
+        tag,
+        createdDate,
+        updatedDate: createdDate,
+        FormatedDate: date.toISOString().slice(0, 10),
+        votes
+      };
+      const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges'));
+      storedChallenges[id] = challenges[id] = { ...dataToSend };
+      setChallenges({ ...challenges });
+      setError('');
+      window.sessionStorage.setItem('challenges', JSON.stringify({ ...storedChallenges }))
+    }
   };
 
   const updateChallenges = (id) => {
@@ -252,7 +258,7 @@ const Home = () => {
         <Modal
           title={label.ADD_IDEAS_CHALLENGES}
         >
-          <div className="w-100 h-90">
+          <div className="w-100 h-85">
             <div className="form-floating mb-3">
               <input type="text" className="form-control" id="form-title" placeholder="title" />
               <label htmlFor="form-title">Title</label>
@@ -272,12 +278,13 @@ const Home = () => {
               <label htmlFor="form-tags">TAGS</label>
             </div>
           </div>
-          <div className="w-100 row mx-0 h-10 align-items-center">
+          {error && <div className="h-5 w-100 text-center fs-6 text-danger">{error}</div>}
+          <div className="w-100 row mx-0 h-10 align-items-center mt-auto align-self-end">
             <div className="w-50 px-2">
               <button
                 type="button"
                 className="btn btn-secondary w-100"
-                onClick={() => onClose()}
+                onClick={() => { setError(''); onClose(); }}
               >
                 {label.CLOSE}
               </button>
@@ -286,7 +293,7 @@ const Home = () => {
               <button
                 type="button"
                 className="btn btn-success w-100"
-                onClick={() => editId ? updateChallenges(editId): onSave()}
+                onClick={() => { setError(''); return editId ? updateChallenges(editId): onSave(); }}
               >
                 {editId ? label.UPDATE : label.SAVE}
               </button>
