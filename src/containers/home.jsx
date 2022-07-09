@@ -183,68 +183,70 @@ const Home = () => {
   const list = document.getElementById('list');
   const maxHeight = height - list?.offsetTop;
   return (
-    <div className="h-100 w-100">
-      <div className="color-yellow fs-2 fw-bold align-items-center justify-content-center d-flex">
-        {label.HACK_IDEAS}
-        <i className="fas fa-lightbulb lightBulb px-2" />
-      </div>
-      <div className="row mx-0 align-content-center justify-content-end p-2">
-        <button
-          type="button"
-          className="btn btn-success col-12 col-md-3 p-2"
-          disabled={isOpen}
-          onClick={() => handleNewEntry()}
-        >
-          {label.ADD_IDEAS_CHALLENGES}
-        </button>
-      </div>
-      <div className="d-flex flex-wrap px-2 justify-content-between">
-        <div className="col-12 col-md-3 py-2 form-floating">
-          <input
-            type="search"
-            name="search"
-            id="search"
-            className="form-control"
-            onChange={(e) => filterChallenges(e.target.value)}
-          />
-          <label htmlFor="search">{label.SEARCH}</label>
+    <>
+      <div className="h-100 w-100" style={{ opacity: isOpen ? '0.1' : '1' }}>
+        <div className="color-yellow fs-2 fw-bold align-items-center justify-content-center d-flex">
+          {label.HACK_IDEAS}
+          <i className="fas fa-lightbulb lightBulb px-2" />
         </div>
-        <div className="form-floating col-12 py-2 col-md-3">
-          <select
-            className="form-select"
-            id="sortSelect"
-            disabled={Object.values(challenges).length === 0}
-            aria-label="Floating label select example"
-            onChange={(e) => sortChallenges(e.target.value)}
+        <div className="row mx-0 align-content-center justify-content-end p-2">
+          <button
+            type="button"
+            className="btn btn-success col-12 col-md-3 p-2"
+            disabled={isOpen}
+            onClick={() => handleNewEntry()}
           >
-            {sort.map(({ key, value}) => {
-              return (
-                <option
-                  id={key}
-                  key={key}
-                  value={key}
-                >
-                  {value}
-                </option>
-              );
-            })}
-          </select>
-          <label htmlFor="sortSelect">Sort</label>
+            {label.ADD_IDEAS_CHALLENGES}
+          </button>
         </div>
-      </div>
-      <div id="list" className="col-12 col-md-10 mx-auto overflowY" style={{ maxHeight: `${maxHeight}px` }}>
-        <Suspense fallback={<div className="h-100 w-100 d-flex align-items-center justify-content-center text-secondary fs-2">Loading...</div>}>
-          <HomeComponent
-            handleNewEntry={handleNewEntry}
-            challenges={challenges}
-            updateVotes={updateVotes}
-            sortChallenges={sortChallenges}
-            filterChallenges={filterChallenges}
-            editChallenges={editChallenges}
-            deleteChallenges={deleteChallenges}
-            isOpen={isOpen}
-          />
-        </Suspense>
+        <div className="d-flex flex-wrap px-2 justify-content-between">
+          <div className="col-12 col-md-3 py-2 form-floating">
+            <input
+              type="search"
+              name="search"
+              id="search"
+              className="form-control"
+              onChange={(e) => filterChallenges(e.target.value)}
+            />
+            <label htmlFor="search">{label.SEARCH}</label>
+          </div>
+          <div className="form-floating col-12 py-2 col-md-3">
+            <select
+              className="form-select"
+              id="sortSelect"
+              disabled={Object.values(challenges).length === 0}
+              aria-label="Floating label select example"
+              onChange={(e) => sortChallenges(e.target.value)}
+            >
+              {sort.map(({ key, value}) => {
+                return (
+                  <option
+                    id={key}
+                    key={key}
+                    value={key}
+                  >
+                    {value}
+                  </option>
+                );
+              })}
+            </select>
+            <label htmlFor="sortSelect">Sort</label>
+          </div>
+        </div>
+        <div id="list" className="col-12 col-md-10 mx-auto overflowY" style={{ maxHeight: `${maxHeight}px` }}>
+          <Suspense fallback={<div className="h-100 w-100 d-flex align-items-center justify-content-center text-secondary fs-2">Loading...</div>}>
+            <HomeComponent
+              handleNewEntry={handleNewEntry}
+              challenges={challenges}
+              updateVotes={updateVotes}
+              sortChallenges={sortChallenges}
+              filterChallenges={filterChallenges}
+              editChallenges={editChallenges}
+              deleteChallenges={deleteChallenges}
+              isOpen={isOpen}
+            />
+          </Suspense>
+        </div>
       </div>
       {isOpen && (
         <Modal
@@ -292,7 +294,7 @@ const Home = () => {
           </div>
         </Modal>
       )}
-    </div>
+    </>
   );
 };
 
