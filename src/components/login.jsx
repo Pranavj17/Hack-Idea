@@ -26,7 +26,7 @@ const LoginComponent = ({
           {error && <div className="text-center w-100 fs-6 text-danger mb-1">{error}</div>}
             <button
               type='submit'
-              className="btn btn-success w-100"
+              className="btn btn-success fw-bold w-100"
               onClick={() => {
                 if (document.getElementById('employeeId').value.length === 0) {
                   updateError('Employee ID is required');
