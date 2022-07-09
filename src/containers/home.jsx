@@ -1,12 +1,29 @@
-import React, { useState } from "react";
-import HomeComponent from "../components/home";
+import React, { useRef, useState, useEffect, Suspense, lazy } from "react";
 import label from "../label";
 import Modal from "../components/Modal";
-
+const HomeComponent = lazy(() => import('../components/home'));
 const Tags = [
   { key: 'feature', value: 'Feature' },
   { key: 'tech', value: 'Tech' },
 ];
+const sort = [
+  { key: 'default', value: 'Default'},
+  { key: 'asc-votes', value: 'Votes: low to high' },
+  { key: 'desc-votes', value: 'Votes: high to low' },
+  { key: 'asc-id', value: 'Date: last' },
+  { key: 'desc-id', value: 'Date: recent' },
+];
+
+const generateString = (length = 5) => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let result = '';
+  for (let i = 0; i < length; i += 1) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+};
+
 const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [editId, setEditId] = useState('');
@@ -14,6 +31,27 @@ const Home = () => {
     const challenges = JSON.parse(window.sessionStorage.getItem('challenges'));
     return challenges || {};
   });
+
+  useEffect(() => {
+    const obj = {};
+    for (let i=0; i< 1000; i++) {
+      const date = new Date();
+      const createdDate = date;
+      const data = {
+        id: `${date.getTime()}${i}`,
+        title: generateString(Math.floor(Math.random() * 10)),
+        description: generateString(Math.floor(Math.random() * 45)),
+        tag: i % 2 === 0 ? 'feature' : 'tech',
+        createdDate,
+        updatedDate: createdDate,
+        FormatedDate: date.toISOString().slice(0, 10),
+        votes: Math.floor(Math.random() * 1000)
+      };
+      obj[data.id] = data;
+    }
+    setChallenges(obj);
+    window.sessionStorage.setItem('challenges', JSON.stringify(obj));
+  }, []);
   const handleNewEntry = () => {
     setIsOpen(true);
   };
@@ -36,9 +74,10 @@ const Home = () => {
       FormatedDate: date.toISOString().slice(0, 10),
       votes
     };
-    challenges[id] = { ...dataToSend };
+    const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges'));
+    storedChallenges[id] = challenges[id] = { ...dataToSend };
     setChallenges({ ...challenges });
-    window.sessionStorage.setItem('challenges', JSON.stringify({ ...challenges }))
+    window.sessionStorage.setItem('challenges', JSON.stringify({ ...storedChallenges }))
   };
 
   const updateChallenges = (id) => {
@@ -46,26 +85,26 @@ const Home = () => {
     const description = document.getElementById('form-description').value;
     const tag =  document.getElementById('form-tags').value;
     const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges'));
-    storedChallenges[id] = {
-      ...storedChallenges[id],
+    storedChallenges[id] = challenges[id] = {
+      ...challenges[id],
       updatedDate: new Date(),
       title,
       description,
       tag
     };
-    setChallenges({ ...storedChallenges });
+    setChallenges({ ...challenges });
     setEditId('');
     setIsOpen(false);
     window.sessionStorage.setItem('challenges', JSON.stringify({ ...storedChallenges }))
   };
   const updateVotes = (id) => {
     const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges'));
-    storedChallenges[id] = {
-      ...storedChallenges[id],
+    storedChallenges[id] = challenges[id] = {
+      ...challenges[id],
       updatedDate: new Date(),
       votes: storedChallenges[id]?.votes + 1
     };
-    setChallenges({ ...storedChallenges });
+    setChallenges({ ...challenges });
     window.sessionStorage.setItem('challenges', JSON.stringify({ ...storedChallenges }))
   };
   const onClose = () => {
@@ -76,7 +115,9 @@ const Home = () => {
   const sortChallenges = (key) => {
     let obj = {};
     if (key === 'default') {
-      obj = JSON.parse(window.sessionStorage.getItem('challenges'));
+      obj = Object.values(challenges || {}).sort((a, b) => {
+        return a.id - b.id;
+      });
       setChallenges(obj);
     } else {
       const [order, type] = key.split('-');
@@ -96,25 +137,32 @@ const Home = () => {
   const deleteChallenges = (id) => {
     const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges'));
     delete storedChallenges[id];
+    delete challenges[id];
     window.sessionStorage.setItem('challenges', JSON.stringify({ ...storedChallenges }))
-    setChallenges({ ...storedChallenges });
+    setChallenges({ ...challenges });
   };
   
+  let timeoutRef = useRef(null);
   const filterChallenges = (string) => {
-    let obj = {};
-    const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges'));
-    if (string.length > 0) {
-      const list = Object.values(storedChallenges || {}).filter((e) => {
-        return e.title.toLowerCase().includes(string.toLowerCase());
-      });
-      list.forEach((a) => {
-        obj[a.id] = a;
-      });
-      setChallenges(obj);  
-    } else {
-      obj = {...storedChallenges};
-      setChallenges(obj);
-    }    
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      let obj = {};
+      const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges'));
+      if (string.length > 0) {
+        const list = Object.values(storedChallenges || {}).filter((e) => {
+          return e.title.toLowerCase().includes(string.toLowerCase());
+        });
+        list.forEach((a) => {
+          obj[a.id] = a;
+        });
+        setChallenges(obj);  
+      } else {
+        obj = {...storedChallenges};
+        setChallenges(obj);
+      }
+    }, 200);
   };
 
   const editChallenges = (id) => {
@@ -128,21 +176,72 @@ const Home = () => {
       title.value = reqChallenge.title;
       description.value = reqChallenge.description;
       tag.value = reqChallenge.tag;
-      console.log(title);
     }, 0);
   };
   return (
-    <>
-      <HomeComponent
-        handleNewEntry={handleNewEntry}
-        challenges={challenges}
-        updateVotes={updateVotes}
-        sortChallenges={sortChallenges}
-        filterChallenges={filterChallenges}
-        editChallenges={editChallenges}
-        deleteChallenges={deleteChallenges}
-        isOpen={isOpen}
-      />
+    <div className="h-100 w-100">
+      <div className="h-10 color-yellow fs-2 fw-bold align-items-center justify-content-center d-flex">
+        {label.HACK_IDEAS}
+        <i className="fas fa-lightbulb lightBulb px-2" />
+      </div>
+      <div className="h-10 row mx-0 align-content-center justify-content-end p-2">
+        <button
+          type="button"
+          className="btn btn-success w-25 p-2"
+          disabled={isOpen}
+          onClick={() => handleNewEntry()}
+        >
+          {label.ADD_IDEAS_CHALLENGES}
+        </button>
+      </div>
+      <div className="h-10 d-flex flex-wrap px-2 justify-content-between">
+        <div className="w-25 form-floating">
+          <input
+            type="search"
+            name="search"
+            id="search"
+            className="form-control"
+            onChange={(e) => filterChallenges(e.target.value)}
+          />
+          <label htmlFor="search">{label.SEARCH}</label>
+        </div>
+        <div className="form-floating w-25">
+          <select
+            className="form-select"
+            id="sortSelect"
+            disabled={Object.values(challenges).length === 0}
+            aria-label="Floating label select example"
+            onChange={(e) => sortChallenges(e.target.value)}
+          >
+            {sort.map(({ key, value}) => {
+              return (
+                <option
+                  id={key}
+                  key={key}
+                  value={key}
+                >
+                  {value}
+                </option>
+              );
+            })}
+          </select>
+          <label htmlFor="sortSelect">Sort</label>
+        </div>
+      </div>
+      <div className="h-70 col-12 col-md-10 mx-auto overflowY">
+        <Suspense fallback={<div className="h-100 w-100 d-flex align-items-center justify-content-center text-secondary fs-2">Loading...</div>}>
+          <HomeComponent
+            handleNewEntry={handleNewEntry}
+            challenges={challenges}
+            updateVotes={updateVotes}
+            sortChallenges={sortChallenges}
+            filterChallenges={filterChallenges}
+            editChallenges={editChallenges}
+            deleteChallenges={deleteChallenges}
+            isOpen={isOpen}
+          />
+        </Suspense>
+      </div>
       {isOpen && (
         <Modal
           title={label.ADD_IDEAS_CHALLENGES}
@@ -160,7 +259,7 @@ const Home = () => {
               <select className="form-select" id="form-tags" aria-label="Floating label select example">
                 {Tags.map(({ key, value}) => {
                   return (
-                    <option id={key} value={key}>{value}</option>
+                    <option key={key} id={key} value={key}>{value}</option>
                   );
                 })}
               </select>
@@ -180,7 +279,7 @@ const Home = () => {
             <div className="w-50 px-2">
               <button
                 type="button"
-                className="btn btn-primary w-100"
+                className="btn btn-success w-100"
                 onClick={() => editId ? updateChallenges(editId): onSave()}
               >
                 {editId ? label.UPDATE : label.SAVE}
@@ -189,7 +288,7 @@ const Home = () => {
           </div>
         </Modal>
       )}
-    </>
+    </div>
   );
 };
 

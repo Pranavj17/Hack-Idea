@@ -2,6 +2,7 @@ export default {
   HACK_IDEAS: 'HACK IDEAS',
   LOGIN: 'LOGIN',
   EMPLOYEE_ID: 'Employee ID',
+  WELCOME: 'WELCOME',
   PASSWORD: 'Password',
   ADD_IDEAS_CHALLENGES: "Add Ideas/Challenges",
   CLOSE: "CLOSE",
@@ -9,6 +10,6 @@ export default {
   UPDATE: "UPDATE",
   EDIT: 'Edit',
   DELETE: 'Delete',
-  NO_RECORDS_FOUND: 'NO RECORDS FOUNDS',
+  NO_RECORDS_FOUND: 'NO RECORDS FOUND',
   SEARCH: 'Search',
 };

@@ -10,8 +10,22 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #212529;
+  color: #FFFFFF;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.fs-50 {
+  font-size: 50px;
+}
+.color-yellow {
+  color: yellow;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -31,6 +45,13 @@ code {
 }
 .h-15 {
   height: 15%;
+}
+
+.h-20 {
+  height: 20%;
+}
+.h-70 {
+  height: 70%;
 }
 .h-75 {
   height: 75%;
@@ -67,6 +88,22 @@ code {
   ;
 }
 
-.arrow:hover {
-  font-size: larger;
+label {
+  color: #FFFFFF;
 }
+input,
+textarea,
+select,
+.card {
+  background-color: #0b0c0b !important;
+  color: #FFFFFF !important;
+}
+
+.lightBulb {
+  opacity: 0.5;
+}
+
+.lightBulb:hover {
+  opacity: 1;
+}
+
