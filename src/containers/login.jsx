@@ -13,8 +13,8 @@ const Login = () => {
 
   return (
     <div className="w-100 h-100 d-flex flex-wrap align-items-center">
-      <div className="fs-50 w-25 fw-bold px-2 color-yellow text-center">{label.HACK_IDEAS} <i className="fas fa-lightbulb lightBulb px-2" /></div>
-      <div className="w-75 h-100">
+      <div className="fs-50 col-12 col-md-4 fw-bold px-2 color-yellow text-center">{label.HACK_IDEAS} <i className="fas fa-lightbulb lightBulb px-2" /></div>
+      <div className="col-12 col-md-8 h-100">
         <LoginComponent
           onSubmit={onSubmit}
           updateError={(e) => setError(e)}

@@ -178,24 +178,28 @@ const Home = () => {
       tag.value = reqChallenge.tag;
     }, 0);
   };
+
+  const height = window.innerHeight;
+  const list = document.getElementById('list');
+  const maxHeight = height - list?.offsetTop;
   return (
     <div className="h-100 w-100">
-      <div className="h-10 color-yellow fs-2 fw-bold align-items-center justify-content-center d-flex">
+      <div className="color-yellow fs-2 fw-bold align-items-center justify-content-center d-flex">
         {label.HACK_IDEAS}
         <i className="fas fa-lightbulb lightBulb px-2" />
       </div>
-      <div className="h-10 row mx-0 align-content-center justify-content-end p-2">
+      <div className="row mx-0 align-content-center justify-content-end p-2">
         <button
           type="button"
-          className="btn btn-success w-25 p-2"
+          className="btn btn-success col-12 col-md-3 p-2"
           disabled={isOpen}
           onClick={() => handleNewEntry()}
         >
           {label.ADD_IDEAS_CHALLENGES}
         </button>
       </div>
-      <div className="h-10 d-flex flex-wrap px-2 justify-content-between">
-        <div className="w-25 form-floating">
+      <div className="d-flex flex-wrap px-2 justify-content-between">
+        <div className="col-12 col-md-3 py-2 form-floating">
           <input
             type="search"
             name="search"
@@ -205,7 +209,7 @@ const Home = () => {
           />
           <label htmlFor="search">{label.SEARCH}</label>
         </div>
-        <div className="form-floating w-25">
+        <div className="form-floating col-12 py-2 col-md-3">
           <select
             className="form-select"
             id="sortSelect"
@@ -228,7 +232,7 @@ const Home = () => {
           <label htmlFor="sortSelect">Sort</label>
         </div>
       </div>
-      <div className="h-70 col-12 col-md-10 mx-auto overflowY">
+      <div id="list" className="col-12 col-md-10 mx-auto overflowY" style={{ maxHeight: `${maxHeight}px` }}>
         <Suspense fallback={<div className="h-100 w-100 d-flex align-items-center justify-content-center text-secondary fs-2">Loading...</div>}>
           <HomeComponent
             handleNewEntry={handleNewEntry}
@@ -249,11 +253,11 @@ const Home = () => {
           <div className="w-100 h-90">
             <div className="form-floating mb-3">
               <input type="text" className="form-control" id="form-title" placeholder="title" />
-              <label for="form-title">Title</label>
+              <label htmlFor="form-title">Title</label>
             </div>
             <div className="form-floating mb-3">
               <textarea style={{ minHeight: '180px' }} className="form-control" placeholder="Leave a comment here" id="form-description"></textarea>
-              <label for="form-description">Description</label>
+              <label htmlFor="form-description">Description</label>
             </div>
             <div className="form-floating mb-3">
               <select className="form-select" id="form-tags" aria-label="Floating label select example">
@@ -263,7 +267,7 @@ const Home = () => {
                   );
                 })}
               </select>
-              <label for="form-tags">TAGS</label>
+              <label htmlFor="form-tags">TAGS</label>
             </div>
           </div>
           <div className="w-100 row mx-0 h-10 align-items-center">

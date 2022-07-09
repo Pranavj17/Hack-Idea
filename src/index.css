@@ -50,6 +50,9 @@ code {
 .h-20 {
   height: 20%;
 }
+.h-60 {
+  height: 60%;
+}
 .h-70 {
   height: 70%;
 }
@@ -106,4 +109,3 @@ select,
 .lightBulb:hover {
   opacity: 1;
 }
-
