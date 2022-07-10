@@ -24,6 +24,25 @@ const generateString = (length = 5) => {
   return result;
 };
 
+const getDummyList = () => {
+  const obj = {};
+  for (let i=0; i< 1000; i++) {
+    const date = new Date();
+    const createdDate = date;
+    const data = {
+      id: `${date.getTime()}${i}`,
+      title: generateString(Math.floor(Math.random() * 10)),
+      description: generateString(Math.floor(Math.random() * 45)),
+      tag: i % 2 === 0 ? 'feature' : 'tech',
+      createdDate,
+      updatedDate: createdDate,
+      FormatedDate: date.toISOString().slice(0, 10),
+      votes: Math.floor(Math.random() * 1000)
+    };
+    obj[data.id] = data;
+  }
+  return obj;
+}
 const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [editId, setEditId] = useState('');
@@ -34,24 +53,8 @@ const Home = () => {
   });
 
   useEffect(() => {
-    // const obj = {};
-    // for (let i=0; i< 1000; i++) {
-    //   const date = new Date();
-    //   const createdDate = date;
-    //   const data = {
-    //     id: `${date.getTime()}${i}`,
-    //     title: generateString(Math.floor(Math.random() * 10)),
-    //     description: generateString(Math.floor(Math.random() * 45)),
-    //     tag: i % 2 === 0 ? 'feature' : 'tech',
-    //     createdDate,
-    //     updatedDate: createdDate,
-    //     FormatedDate: date.toISOString().slice(0, 10),
-    //     votes: Math.floor(Math.random() * 1000)
-    //   };
-    //   obj[data.id] = data;
-    // }
-    // setChallenges(obj);
-    // window.sessionStorage.setItem('challenges', JSON.stringify(obj));
+    setChallenges(getDummyList());
+    window.sessionStorage.setItem('challenges', JSON.stringify((getDummyList())));
   }, []);
   const handleNewEntry = () => {
     setIsOpen(true);

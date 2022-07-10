@@ -40,14 +40,14 @@ const List = ({
     };
   });
   return (
-    <div ref={ref} className="card w-100 align-items-center p-2 mb-2 flex-row flex-wrap shadow-sm">
+    <div ref={ref} className="card w-100 align-items-center p-2 mb-2 flex-row flex-wrap shadow-sm" style={{ minHeight: '8rem' }}>
       {visible && (
         <>
           <div className="fs-2 col-12 col-md-12">{title}</div>
           <div className="col-12 col-md-4 py-1">{description}</div>
           <div className="col-4 col-md-2 py-1">{FormatedDate}</div>
           <div className="col-4 col-md-1 py-1">{tag}</div>
-          <div role="presentation" onClick={() => updateVotes(id)} className="col-4 py-1 col-md-1 cursor-pointer">{votes}<i className="px-1 arrow fas fa-arrow-circle-up text-success" /></div>
+          <div className="col-4 py-1 col-md-1 cursor-pointer">{votes}<i role="presentation" onClick={() => updateVotes(id)} className="px-1 arrowUp fas fa-arrow-circle-up text-success" /></div>
           <div className="col-6 col-md-2 px-2">
             <button onClick={() => editChallenges(id)} type="button" className="btn w-100 btn-secondary">
               {label.EDIT}

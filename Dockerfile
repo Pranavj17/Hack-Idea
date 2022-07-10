@@ -1,20 +1,20 @@
 FROM node:alpine
 
 # set the working direction
-WORKDIR /
+WORKDIR /app
 
 # add `/app/node_modules/.bin` to $PATH
-ENV PATH /node_modules/.bin:$PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
 # install app dependencies
 COPY package.json ./
+COPY yarn.lock .
+# COPY package-lock.json ./
 
-COPY package-lock.json ./
-
-RUN npm install
+RUN yarn install
 
 # add app
-COPY . ./
-
+COPY . . /
+EXPOSE 3000
 # start app
-CMD ["npm", "start"]
+CMD ["yarn", "start"]

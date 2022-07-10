@@ -94,6 +94,11 @@ code {
 label {
   color: #FFFFFF;
 }
+
+.arrowUp:active {
+  font-size: 0.8rem;
+}
+
 input,
 textarea,
 select,
@@ -101,7 +106,6 @@ select,
   background-color: #0b0c0b !important;
   color: #FFFFFF !important;
 }
-
 .form-select:disabled {
   background-color: #495057 !important;
 }
