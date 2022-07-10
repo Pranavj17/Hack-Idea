@@ -112,7 +112,7 @@ const Home = () => {
     storedChallenges[id] = challenges[id] = {
       ...challenges[id],
       updatedDate: new Date(),
-      votes: storedChallenges[id]?.votes + 1
+      votes: challenges[id]?.votes + 1
     };
     setChallenges({ ...challenges });
     window.sessionStorage.setItem('challenges', JSON.stringify({ ...storedChallenges }))
