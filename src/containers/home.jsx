@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, Suspense, lazy } from "react";
 import label from "../label";
 import Modal from "../components/Modal";
+import Loader from "../components/Loader";
 const HomeComponent = lazy(() => import('../components/home'));
 const Tags = [
   { key: 'feature', value: 'Feature' },
@@ -244,7 +245,7 @@ const Home = () => {
           </div>
         </div>
         <div id="list" className="col-12 col-md-10 mx-auto overflowY" style={{ maxHeight: `${maxHeight}px` }}>
-          <Suspense fallback={<div className="h-100 w-100 d-flex align-items-center justify-content-center text-secondary fs-2">Loading...</div>}>
+          <Suspense fallback={<Loader />}>
             <HomeComponent
               handleNewEntry={handleNewEntry}
               challenges={challenges}
