@@ -29,29 +29,29 @@ const Home = () => {
   const [editId, setEditId] = useState('');
   const [error, setError] = useState('');
   const [challenges, setChallenges] = useState(() => {
-    const challenges = JSON.parse(window.sessionStorage.getItem('challenges'));
+    const challenges = JSON.parse(window.sessionStorage.getItem('challenges')) || {};
     return challenges || {};
   });
 
   useEffect(() => {
-    const obj = {};
-    for (let i=0; i< 1000; i++) {
-      const date = new Date();
-      const createdDate = date;
-      const data = {
-        id: `${date.getTime()}${i}`,
-        title: generateString(Math.floor(Math.random() * 10)),
-        description: generateString(Math.floor(Math.random() * 45)),
-        tag: i % 2 === 0 ? 'feature' : 'tech',
-        createdDate,
-        updatedDate: createdDate,
-        FormatedDate: date.toISOString().slice(0, 10),
-        votes: Math.floor(Math.random() * 1000)
-      };
-      obj[data.id] = data;
-    }
-    setChallenges(obj);
-    window.sessionStorage.setItem('challenges', JSON.stringify(obj));
+    // const obj = {};
+    // for (let i=0; i< 1000; i++) {
+    //   const date = new Date();
+    //   const createdDate = date;
+    //   const data = {
+    //     id: `${date.getTime()}${i}`,
+    //     title: generateString(Math.floor(Math.random() * 10)),
+    //     description: generateString(Math.floor(Math.random() * 45)),
+    //     tag: i % 2 === 0 ? 'feature' : 'tech',
+    //     createdDate,
+    //     updatedDate: createdDate,
+    //     FormatedDate: date.toISOString().slice(0, 10),
+    //     votes: Math.floor(Math.random() * 1000)
+    //   };
+    //   obj[data.id] = data;
+    // }
+    // setChallenges(obj);
+    // window.sessionStorage.setItem('challenges', JSON.stringify(obj));
   }, []);
   const handleNewEntry = () => {
     setIsOpen(true);
@@ -78,10 +78,11 @@ const Home = () => {
         FormatedDate: date.toISOString().slice(0, 10),
         votes
       };
-      const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges'));
+      const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges')) || {};
       storedChallenges[id] = challenges[id] = { ...dataToSend };
       setChallenges({ ...challenges });
       setError('');
+      console.log('storedChallenges', storedChallenges);
       window.sessionStorage.setItem('challenges', JSON.stringify({ ...storedChallenges }))
     }
   };
@@ -90,7 +91,7 @@ const Home = () => {
     const title = document.getElementById('form-title').value;
     const description = document.getElementById('form-description').value;
     const tag =  document.getElementById('form-tags').value;
-    const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges'));
+    const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges')) || {};
     storedChallenges[id] = challenges[id] = {
       ...challenges[id],
       updatedDate: new Date(),
@@ -104,7 +105,7 @@ const Home = () => {
     window.sessionStorage.setItem('challenges', JSON.stringify({ ...storedChallenges }))
   };
   const updateVotes = (id) => {
-    const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges'));
+    const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges')) || {};
     storedChallenges[id] = challenges[id] = {
       ...challenges[id],
       updatedDate: new Date(),
@@ -141,7 +142,7 @@ const Home = () => {
   };
 
   const deleteChallenges = (id) => {
-    const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges'));
+    const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges')) || {};
     delete storedChallenges[id];
     delete challenges[id];
     window.sessionStorage.setItem('challenges', JSON.stringify({ ...storedChallenges }))
@@ -155,7 +156,7 @@ const Home = () => {
     }
     timeoutRef.current = setTimeout(() => {
       let obj = {};
-      const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges'));
+      const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges')) || {};
       if (string.length > 0) {
         const list = Object.values(storedChallenges || {}).filter((e) => {
           return e.title.toLowerCase().includes(string.toLowerCase());

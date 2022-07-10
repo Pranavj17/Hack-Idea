@@ -89,7 +89,7 @@ const HomeComponent = ({
             );
           })}
         </div>
-      ) : <div className="fs-3 row mx-0 h-100 align-items-center justify-content-center text-danger fw-bold text-center">{label.NO_RECORDS_FOUND}</div>}
+      ) : <div className="fs-3 row mx-0 h-100 align-items-center justify-content-center text-white-50 fw-bold text-center">{label.NO_RECORDS_FOUND}</div>}
     </>
   );
 };
