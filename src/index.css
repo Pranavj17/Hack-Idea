@@ -108,6 +108,7 @@ select,
 .lightBulb {
   opacity: 0.5;
   animation: flicker 2s linear;
+  cursor: pointer;
 }
 @keyframes flicker {
   from {opacity: 0.5;}
