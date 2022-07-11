@@ -1,0 +1,20 @@
+.transparent {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.22);
+  border: 0;
+  z-index: 101500;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+
+.imgSpin {
+  background: url("./loader.gif");
+  height: 110px;
+  width: 100%;
+  background-size: 110px 110px;
+  background-position: center;
+  background-repeat: no-repeat; }
+  
