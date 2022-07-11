@@ -27,17 +27,17 @@ const generateString = (length = 5) => {
 
 const getDummyList = () => {
   const obj = {};
-  for (let i=0; i< 1000; i++) {
+  for (let i=0; i< 2; i++) {
     const date = new Date();
-    const createdDate = date;
+    console.log('data', date);
     const data = {
       id: `${date.getTime()}${i}`,
       title: generateString(Math.floor(Math.random() * 10)),
       description: generateString(Math.floor(Math.random() * 45)),
       tag: i % 2 === 0 ? 'feature' : 'tech',
-      createdDate,
-      updatedDate: createdDate,
-      FormatedDate: date.toISOString().slice(0, 10),
+      createdDate: date,
+      updatedDate: date,
+      formatedDate: `${date.toLocaleDateString('en-us', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}, ${date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`,
       votes: Math.floor(Math.random() * 1000)
     };
     obj[data.id] = data;
@@ -53,19 +53,17 @@ const Home = () => {
     return challenges || {};
   });
 
-  // useEffect(() => {
-  //   const list = getDummyList();
-  //   console.log(Object.values(list).length);
-  //   setChallenges(list);
-  //   window.sessionStorage.setItem('challenges', JSON.stringify((list)));
-  // }, []);
+  useEffect(() => {
+    const list = getDummyList();
+    setChallenges(list);
+    window.sessionStorage.setItem('challenges', JSON.stringify((list)));
+  }, []);
   const handleNewEntry = () => {
     setIsOpen(true);
   };
   const onSave = () => {
     const date = new Date();
     const id = date.getTime();
-    const createdDate = date;
     const title = document.getElementById('form-title').value;
     const description = document.getElementById('form-description').value;
     const tag =  document.getElementById('form-tags').value;
@@ -79,9 +77,9 @@ const Home = () => {
         title,
         description,
         tag,
-        createdDate,
-        updatedDate: createdDate,
-        FormatedDate: date.toISOString().slice(0, 10),
+        createdDate: date,
+        updatedDate: date,
+        formatedDate: `${date.toLocaleDateString('en-us', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}, ${date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`,
         votes
       };
       const storedChallenges = JSON.parse(window.sessionStorage.getItem('challenges')) || {};
@@ -267,15 +265,15 @@ const Home = () => {
         >
           <div className="w-100 h-85">
             <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="form-title" placeholder="title" />
+              <input onFocus={() => setError('')} type="text" className="form-control" id="form-title" placeholder="title" />
               <label htmlFor="form-title">Title</label>
             </div>
             <div className="form-floating mb-3">
-              <textarea style={{ minHeight: '180px' }} className="form-control" placeholder="Leave a comment here" id="form-description"></textarea>
+              <textarea onFocus={() => setError('')} style={{ minHeight: '180px' }} className="form-control" placeholder="Leave a comment here" id="form-description"></textarea>
               <label htmlFor="form-description">Description</label>
             </div>
             <div className="form-floating mb-3">
-              <select className="form-select" id="form-tags" aria-label="Floating label select example">
+              <select onFocus={() => setError('')} className="form-select" id="form-tags" aria-label="Floating label select example">
                 {Tags.map(({ key, value}) => {
                   return (
                     <option key={key} id={key} value={key}>{value}</option>
@@ -285,7 +283,7 @@ const Home = () => {
               <label htmlFor="form-tags">TAGS</label>
             </div>
           </div>
-          {error && <div className="h-5 w-100 text-center fs-6 text-danger">{error}</div>}
+          {error && <div id="homeError" className="h-5 w-100 text-center fs-6 text-danger">{error}</div>}
           <div className="w-100 row mx-0 h-10 align-items-center mt-auto align-self-end">
             <div className="w-50 px-2">
               <button

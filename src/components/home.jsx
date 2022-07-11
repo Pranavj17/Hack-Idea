@@ -14,7 +14,7 @@ const List = ({
     votes,
     tag,
     id,
-    FormatedDate,
+    formatedDate,
   } = data;
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -43,9 +43,9 @@ const List = ({
     <div ref={ref} className="card w-100 align-items-center p-2 mb-2 flex-row flex-wrap shadow-sm" style={{ minHeight: '8rem' }}>
       {visible && (
         <>
-          <div className="fs-2 col-12 col-md-12">{title}</div>
+          <div className="fs-2 col-12 col-md-12 fw-bold ">{title}</div>
           <div className="col-12 col-md-4 p-1">{description}</div>
-          <div className="col-4 col-md-2 p-1">{FormatedDate}</div>
+          <div className="col-4 col-md-2 p-1">{formatedDate}</div>
           <div className="col-4 col-md-1 p-1 text-center">{tag}</div>
           <div className="col-4 p-1 col-md-1 cursor-pointer text-end">{votes}<i role="presentation" onClick={() => updateVotes(id)} className="px-1 arrowUp fs-18 fas fa-arrow-circle-up text-success" /></div>
           <div className="col-6 col-md-2 px-2">
