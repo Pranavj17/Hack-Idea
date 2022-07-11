@@ -44,10 +44,10 @@ const List = ({
       {visible && (
         <>
           <div className="fs-2 col-12 col-md-12">{title}</div>
-          <div className="col-12 col-md-4 py-1">{description}</div>
-          <div className="col-4 col-md-2 py-1">{FormatedDate}</div>
-          <div className="col-4 col-md-1 py-1">{tag}</div>
-          <div className="col-4 py-1 col-md-1 cursor-pointer">{votes}<i role="presentation" onClick={() => updateVotes(id)} className="px-1 arrowUp fas fa-arrow-circle-up text-success" /></div>
+          <div className="col-12 col-md-4 p-1">{description}</div>
+          <div className="col-4 col-md-2 p-1">{FormatedDate}</div>
+          <div className="col-4 col-md-1 p-1 text-center">{tag}</div>
+          <div className="col-4 p-1 col-md-1 cursor-pointer text-end">{votes}<i role="presentation" onClick={() => updateVotes(id)} className="px-1 arrowUp fs-18 fas fa-arrow-circle-up text-success" /></div>
           <div className="col-6 col-md-2 px-2">
             <button onClick={() => editChallenges(id)} type="button" className="btn w-100 btn-secondary">
               {label.EDIT}

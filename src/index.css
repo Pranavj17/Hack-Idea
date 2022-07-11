@@ -19,7 +19,9 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
+.fs-18 {
+  font-size: 18px;
+}
 .fs-50 {
   font-size: 50px;
 }
@@ -96,7 +98,7 @@ label {
 }
 
 .arrowUp:active {
-  font-size: 0.8rem;
+  font-size: 16px;
 }
 
 input,

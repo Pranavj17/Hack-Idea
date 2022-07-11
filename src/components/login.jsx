@@ -7,8 +7,8 @@ const LoginComponent = ({
   updateError,
 }) => {
   return (
-    <div className="w-100 h-100 justify-content-center text-center fs-4 d-flex flex-wrap align-content-center">
-      <div className="card">
+    <div className="w-100 h-100 justify-content-center text-center fs-4 d-flex align-items-center">
+      <div className="card" style={{ maxWidth: '20rem' }}>
         <div className="card-body d-flex flex-wrap">
           <div className="w-100 mb-3">
             <label className="form-label">{label.EMPLOYEE_ID}</label>
@@ -23,7 +23,7 @@ const LoginComponent = ({
             />
           </div>
           <div className="mt-auto align-self-end w-100">
-          {error && <div className="text-center w-100 fs-6 text-danger mb-1">{error}</div>}
+          {error && <div id="loginError" className="text-center w-100 fs-6 text-danger mb-1">{error}</div>}
             <button
               type='submit'
               className="btn btn-success fw-bold w-100"

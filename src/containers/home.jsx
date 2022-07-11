@@ -53,10 +53,12 @@ const Home = () => {
     return challenges || {};
   });
 
-  useEffect(() => {
-    setChallenges(getDummyList());
-    window.sessionStorage.setItem('challenges', JSON.stringify((getDummyList())));
-  }, []);
+  // useEffect(() => {
+  //   const list = getDummyList();
+  //   console.log(Object.values(list).length);
+  //   setChallenges(list);
+  //   window.sessionStorage.setItem('challenges', JSON.stringify((list)));
+  // }, []);
   const handleNewEntry = () => {
     setIsOpen(true);
   };
@@ -200,30 +202,20 @@ const Home = () => {
           {label.HACK_IDEAS}
           <i className="fas fa-lightbulb lightBulb px-2" />
         </div>
-        <div className="row mx-0 align-content-center justify-content-end p-2">
-          <button
-            type="button"
-            className="btn btn-success col-12 col-md-3 p-2"
-            disabled={isOpen}
-            onClick={() => handleNewEntry()}
-          >
-            {label.ADD_IDEAS_CHALLENGES}
-          </button>
-        </div>
-        <div className="d-flex flex-wrap px-2 justify-content-between">
-          <div className="col-12 col-md-3 py-2 form-floating">
+        <div className="col-12 col-md-12 col-lg-10 mx-auto p-2 d-flex flex-wrap justify-content-between">
+          <div className="col-12 col-md-2 py-2 form-floating">
             <input
               type="search"
               name="search"
               id="search"
-              className="form-control"
+              className="form-control border-0"
               onChange={(e) => filterChallenges(e.target.value)}
             />
             <label htmlFor="search">{label.SEARCH}</label>
           </div>
-          <div className="form-floating col-12 py-2 col-md-3">
+          <div className="form-floating col-12 py-2 col-md-2">
             <select
-              className="form-select"
+              className="form-select border-0"
               id="sortSelect"
               disabled={Object.values(challenges).length === 0}
               aria-label="Floating label select example"
@@ -243,8 +235,18 @@ const Home = () => {
             </select>
             <label htmlFor="sortSelect">Sort</label>
           </div>
+          <div className="col-12 col-md-2 py-2">
+            <button
+              type="button"
+              className="btn btn-success w-100 h-100"
+              disabled={isOpen}
+              onClick={() => handleNewEntry()}
+            >
+              {label.ADD_IDEAS_CHALLENGES}
+            </button>
+          </div>
         </div>
-        <div id="list" className="col-12 col-md-10 mx-auto overflowY" style={{ maxHeight: `${maxHeight}px` }}>
+        <div id="list" className="col-12 col-md-12 col-lg-10 mx-auto overflowY" style={{ maxHeight: `${maxHeight}px` }}>
           <Suspense fallback={<Loader />}>
             <HomeComponent
               handleNewEntry={handleNewEntry}
@@ -287,6 +289,7 @@ const Home = () => {
           <div className="w-100 row mx-0 h-10 align-items-center mt-auto align-self-end">
             <div className="w-50 px-2">
               <button
+                id="close"
                 type="button"
                 className="btn btn-secondary w-100"
                 onClick={() => { setError(''); onClose(); }}
@@ -296,6 +299,7 @@ const Home = () => {
             </div>
             <div className="w-50 px-2">
               <button
+                id={editId ? 'update': 'save'}
                 type="button"
                 className="btn btn-success w-100"
                 onClick={() => { setError(''); return editId ? updateChallenges(editId): onSave(); }}

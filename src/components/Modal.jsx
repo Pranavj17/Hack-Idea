@@ -6,9 +6,9 @@ const Modal = ({
   title,
 }) => {
   return (
-    <div className="modalWrapper">
+    <div id="modal" className="modalWrapper">
       <div className="w-100 h-10 fs-2 text-center text-black fw-bold">{title}</div>
-      <div className="w-100 h-90 d-flex flex-wrap">
+      <div className="w-100 h-90 d-flex flex-wrap overflowY">
         {children}
       </div>
     </div>
