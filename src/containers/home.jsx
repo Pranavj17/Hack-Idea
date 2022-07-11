@@ -58,6 +58,7 @@ const Home = () => {
   //   setChallenges(list);
   //   window.sessionStorage.setItem('challenges', JSON.stringify((list)));
   // }, []);
+
   const handleNewEntry = () => {
     setIsOpen(true);
   };
