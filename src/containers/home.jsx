@@ -27,9 +27,8 @@ const generateString = (length = 5) => {
 
 const getDummyList = () => {
   const obj = {};
-  for (let i=0; i< 2; i++) {
+  for (let i=0; i< 1000; i++) {
     const date = new Date();
-    console.log('data', date);
     const data = {
       id: `${date.getTime()}${i}`,
       title: generateString(Math.floor(Math.random() * 10)),
@@ -53,11 +52,11 @@ const Home = () => {
     return challenges || {};
   });
 
-  // useEffect(() => {
-  //   const list = getDummyList();
-  //   setChallenges(list);
-  //   window.sessionStorage.setItem('challenges', JSON.stringify((list)));
-  // }, []);
+  useEffect(() => {
+    const list = getDummyList();
+    setChallenges(list);
+    window.sessionStorage.setItem('challenges', JSON.stringify((list)));
+  }, []);
 
   const handleNewEntry = () => {
     setIsOpen(true);
