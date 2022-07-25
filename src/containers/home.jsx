@@ -52,11 +52,11 @@ const Home = () => {
     return challenges || {};
   });
 
-  useEffect(() => {
-    const list = getDummyList();
-    setChallenges(list);
-    window.sessionStorage.setItem('challenges', JSON.stringify((list)));
-  }, []);
+  // useEffect(() => {
+  //   const list = getDummyList();
+  //   setChallenges(list);
+  //   window.sessionStorage.setItem('challenges', JSON.stringify((list)));
+  // }, []);
 
   const handleNewEntry = () => {
     setIsOpen(true);
